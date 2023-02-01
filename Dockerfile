@@ -7,6 +7,7 @@ RUN apt-get update \
 
 WORKDIR /app
 COPY requirements.txt ./
+RUN pip install debugpy -t /tmp
 RUN pip install -r requirements.txt
 COPY . .
 

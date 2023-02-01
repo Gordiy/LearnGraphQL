@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_filters',
     'graphene_django',
 
     'files',
@@ -133,6 +134,6 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 GRAPHENE = {
-    # "SCHEMA": "common.schemas.schema.general_schema"
-    "SCHEMA": "folder.schemas.folder_schema.schema"
+    "SCHEMA": "common.schemas.schema"
+    # "SCHEMA": "folder.schemas.schema"
 }

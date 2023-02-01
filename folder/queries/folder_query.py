@@ -12,15 +12,19 @@ class FolderQuery(graphene.ObjectType):
     folder_by_name = graphene.Field(FolderType, name=graphene.String(required=True))
 
     @staticmethod
-    def resolve_folders(root, info, id: int=None) -> QuerySet[Folder]:
+    def resolve_folders(root, info, id: int or None) -> QuerySet[Folder]:
         """Get all folders inside another folder."""
         if not id:
-            return Folder.object.filter(name='root')
+            root_folder = Folder.objects.get(name='root')
+            return Folder.objects.filter(previous=root_folder)
 
         return Folder.objects.filter(pk=id)
 
     @staticmethod
-    def resolve_folder_by_name(root, info, name: str) -> QuerySet[Folder]:
-        """Find folder by name."""
+    def resolve_folder_by_name(root, info, name: str) -> Folder or None:
+        """Get folder by name."""
 
-        return Folder.objects.filter(name=name)
+        try:
+            return Folder.objects.get(name=name)
+        except Folder.DoesNotExist:
+            return None
